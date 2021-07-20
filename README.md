@@ -12,8 +12,9 @@ a cloud provider) and from a container in a Kubernertes deployment.
 # Usage
 * Download and extract the archive of Shell scripts:
 ```bash
-$ wget https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v0.0.1.tar.gz -O k8s-job-wrappers.tar.gz
-$ tar zxf k8s-job-wrappers.tar.gz && rm -f k8s-job-wrappers.tar.gz
+LOGSUP_VER="0.0.1"
+wget https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v$LOGSUP_VER.tar.gz -O k8s-job-wrappers.tar.gz
+tar zxf k8s-job-wrappers.tar.gz && rm -f k8s-job-wrappers.tar.gz
 ```
 
 * All the following steps may be performed from your own Shell script
@@ -40,7 +41,7 @@ $ touch $LOG_FILE
 
 * Source the Shell support script:
 ```bash
-source setLogFunc.sh
+source k8s-job-wrappers-$LOGSUP_VER/setLogFunc.sh
 ```
 
 * Call the `log` functions
@@ -65,5 +66,5 @@ logEnd "My own application - We can achieve great things with collaboration"
 
 * And that is it. In order to check the resulting log file:
 ```bash
-$ cat $LOG_FILE
+cat $LOG_FILE
 ```
