@@ -10,11 +10,16 @@ from the usual daily environment (_e.g._, laptop, virtual machine (VM) on
 a cloud provider) and from a container in a Kubernertes deployment.
 
 # Usage
-* Download and extract the archive of Shell scripts:
+* Download and extract the archive of Shell scripts (from a `Dockerfile`,
+  just remove the `sudo` keyword):
 ```bash
-LOGSUP_VER="0.0.1"
-wget https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v$LOGSUP_VER.tar.gz -O k8s-job-wrappers.tar.gz
-tar zxf k8s-job-wrappers.tar.gz && rm -f k8s-job-wrappers.tar.gz
+LOGSUP_VERSION="0.0.1"
+curl -L -s \
+  https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v$LOGSUP_VERSION.tar.gz \
+  -o k8s-job-wrappers.tar.gz && \
+tar zxf k8s-job-wrappers.tar.gz && rm -f k8s-job-wrappers.tar.gz && \
+sudo mv -f k8s-job-wrappers-$LOGSUP_VERSION /usr/local/ && \
+sudo ln -s /usr/local/k8s-job-wrappers-$LOGSUP_VERSION /usr/local/k8s-job-wrappers
 ```
 
 * All the following steps may be performed from your own Shell script
@@ -35,13 +40,13 @@ export FUNC="main"
 
 * Make sure that the log file is writeable:
 ```bash
-$ mkdir -p $(dirname $LOG_FILE)
-$ touch $LOG_FILE
+mkdir -p $(dirname $LOG_FILE)
+rm -f $LOG_FILE ; touch $LOG_FILE
 ```
 
 * Source the Shell support script:
 ```bash
-source k8s-job-wrappers-$LOGSUP_VER/setLogFunc.sh
+source /usr/local/k8s-job-wrappers/setLogFunc.sh
 ```
 
 * Call the `log` functions
@@ -68,3 +73,10 @@ logEnd "My own application - We can achieve great things with collaboration"
 ```bash
 cat $LOG_FILE
 ```
+
+* Clean up the generated log file:
+```bash
+rm -f $LOG_FILE
+```
+
+
