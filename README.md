@@ -13,7 +13,7 @@ a cloud provider) and from a container in a Kubernertes deployment.
 * Download and extract the archive of Shell scripts (from a `Dockerfile`,
   just remove the `sudo` keyword):
 ```bash
-LOGSUP_VERSION="0.0.1"
+LOGSUP_VERSION="0.0.2"
 curl -L -s \
   https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v$LOGSUP_VERSION.tar.gz \
   -o k8s-job-wrappers.tar.gz && \
@@ -27,21 +27,29 @@ sudo ln -s /usr/local/k8s-job-wrappers-$LOGSUP_VERSION /usr/local/k8s-job-wrappe
 * Specify a few environment variables
   + URL of the caller script:
 ```bash
-export SCRIPT_GIT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/k8s-job-wrapper-main.sh"
+export KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/k8s-job-wrapper-main.sh"
 ```
   + File-path to the log file:
 ```bash
-export LOG_FILE="$HOME/tmp/application/my-application.log"
+export KJW_LOG_FILE="$HOME/tmp/application/my-application.log"
 ```
   + Name of the caller function:
 ```bash
-export FUNC="main"
+export KJW_FUNC="main"
+```
+  + URL of a container image specification file (_e.g._, `Dockerfile`, if any):
+```bash
+export KJW_CTR_FILE="URL-to-container-image-specification-file"
+```
+  + URL of the Kubernetes deployment file (if any):
+```bash
+export KJW_K8S_DEPL_FILE="URL-to-K8S-deployment-YAML-file"
 ```
 
 * Make sure that the log file is writeable:
 ```bash
-mkdir -p $(dirname $LOG_FILE)
-rm -f $LOG_FILE ; touch $LOG_FILE
+mkdir -p $(dirname $KJW_LOG_FILE)
+rm -f $KJW_LOG_FILE ; touch $KJW_LOG_FILE
 ```
 
 * Source the Shell support script:
@@ -71,12 +79,12 @@ logEnd "My own application - We can achieve great things with collaboration"
 
 * And that is it. In order to check the resulting log file:
 ```bash
-cat $LOG_FILE
+cat $KJW_LOG_FILE
 ```
 
 * Clean up the generated log file:
 ```bash
-rm -f $LOG_FILE
+rm -f $KJW_LOG_FILE
 ```
 
 

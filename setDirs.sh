@@ -10,7 +10,7 @@
 CALLER_SCRIPT="setDirs.sh"
 if [ "$1" != "" ]
 then
-	CALLER_SCRIPT="$1"
+    CALLER_SCRIPT="$1"
 fi
 
 ##
@@ -35,21 +35,21 @@ EXEC_FULL_PATH="$(echo ${EXEC_FULL_PATH} | sed -e 's|~|'${HOME}'|')"
 CURRENT_DIR="$(pwd)"
 if [ ${CURRENT_DIR} -ef ${EXEC_PATH} ]
 then
-	EXEC_PATH="."
-	TMP_DIR="."
+    EXEC_PATH="."
+    TMP_DIR="."
 fi
 # If the Geonames dump file is in the current directory, then the current
 # directory is certainly intended to be the temporary directory.
 if [ -f ${GEO_RAW_FILENAME} ]
 then
-	TMP_DIR="."
+    TMP_DIR="."
 fi
 EXEC_PATH="${EXEC_PATH}/"
 TMP_DIR="${TMP_DIR}/"
 
 if [ ! -d ${TMP_DIR} -o ! -w ${TMP_DIR} ]
 then
-	\mkdir -p ${TMP_DIR}
+    \mkdir -p ${TMP_DIR}
 fi
 
 ##
