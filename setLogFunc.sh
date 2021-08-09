@@ -15,9 +15,13 @@
 THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/shlib/setLogFunc.sh"
 KJW_FUNC="default"
 
+# Derive where KJW has been installed
+# Reference: https://stackoverflow.com/a/246128/798053
+KJW_CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+
 # Set up environment variables for the Linux distribution, host name
 # and architecture
-source setDistAndArch.sh
+source ${KJW_CURRENT_DIR}/setDistAndArch.sh
 retval=$?
 if [ "${retval}" != 0 ]
 then
@@ -26,7 +30,7 @@ then
 fi
 
 # Set up envrionment variables for command-line tools differing on MacOS
-source setGnuTools.sh
+source ${KJW_CURRENT_DIR}/setGnuTools.sh
 retval=$?
 if [ "${retval}" != 0 ]
 then

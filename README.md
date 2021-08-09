@@ -9,6 +9,8 @@ The idea is to use the same support scripts to test an application both
 from the usual daily environment (_e.g._, laptop, virtual machine (VM) on
 a cloud provider) and from a container in a Kubernertes deployment.
 
+K8S Job Wrappers is abbreviated as KJB.
+
 # Usage
 * Download and extract the archive of Shell scripts (from a `Dockerfile`,
   just remove the `sudo` keyword):
