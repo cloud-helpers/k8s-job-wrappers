@@ -49,12 +49,42 @@ then
     return ${retval}
 fi
 
-#
-checkEnvVar() {
-    #declare -a envVarList=($@)
-    for myEnvVar in "$@"
+# Check that a list of environment variables have been specified
+assertEnvVar() {
+    declare -a envVarNameList=($@)
+    for idx in "${!envVarNameList[@]}"
     do
-	echo "Env variable name: ${myEnvVar}"
-	echo "Env variable value: ${!myEnvVar}"
+	local myEnvVarName="${envVarNameList[$idx]}"
+	local myEnvVarValue="${!myEnvVarName}"
+	if [ -z "${myEnvVarValue}" ]
+	then
+	    if [ -z "${KJW_LOG_FILE}" -o ! -w "${KJW_LOG_FILE}" ]
+	    then
+		# The log file has not been specified yet, so we log onto
+		# the standard error stream
+		echo "Error - The ${myEnvVarName} environment variable should be set, but is not." > /dev/stderr
+		echo "        Current script: ${KJW_SCRIPT_URL}"  > /dev/stderr
+		if [ ! -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    echo "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"  > /dev/stderr
+		fi
+
+	    else
+		# The log file has been specified, so we log onto it
+		if [ -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    logMulti "Error - The ${myEnvVarName} environment variable should be set, but is not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"
+		else
+		    logMulti "Error - The ${myEnvVarName} environment variable should be set, but is not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"  \
+		      "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"
+		fi
+	    fi
+
+	    # Return the position of the first environment variable not
+	    # specified
+	    return $(( $idx + 1 ))
+	fi
     done  
 }
