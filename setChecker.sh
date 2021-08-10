@@ -88,3 +88,125 @@ assertEnvVar() {
 	fi
     done  
 }
+
+# Check that a list of directories exist and are accessible
+assertDirExistence() {
+    declare -a envVarNameList=($@)
+    for idx in "${!envVarNameList[@]}"
+    do
+	local myEnvVarName="${envVarNameList[$idx]}"
+	local myEnvVarValue="${!myEnvVarName}"
+	if [ ! -d "${myEnvVarValue}" ]
+	then
+	    if [ -z "${KJW_LOG_FILE}" -o ! -w "${KJW_LOG_FILE}" ]
+	    then
+		# The log file has not been specified yet, so we log onto
+		# the standard error stream
+		echo "Error - The ${myEnvVarValue} directory should exist and be accessible, but does not."  > /dev/stderr
+		echo "        Current script: ${KJW_SCRIPT_URL}"  > /dev/stderr
+		if [ ! -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    echo "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"  > /dev/stderr
+		fi
+
+	    else
+		# The log file has been specified, so we log onto it
+		if [ -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    logMulti "Error - The ${myEnvVarValue} directory should exist and be accessible, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"
+		else
+		    logMulti "Error - The ${myEnvVarValue} directory should exist and be accessible, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"  \
+		      "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"
+		fi
+	    fi
+
+	    # Return the position of the first environment variable not
+	    # specified
+	    return $(( $idx + 1 ))
+	fi
+    done  
+}
+
+# Check that a list of files exist and are accessible
+assertFileExistence() {
+    declare -a envVarNameList=($@)
+    for idx in "${!envVarNameList[@]}"
+    do
+	local myEnvVarName="${envVarNameList[$idx]}"
+	local myEnvVarValue="${!myEnvVarName}"
+	if [ ! -f "${myEnvVarValue}" ]
+	then
+	    if [ -z "${KJW_LOG_FILE}" -o ! -w "${KJW_LOG_FILE}" ]
+	    then
+		# The log file has not been specified yet, so we log onto
+		# the standard error stream
+		echo "Error - The ${myEnvVarValue} file should exist and be accessible, but does not."  > /dev/stderr
+		echo "        Current script: ${KJW_SCRIPT_URL}"  > /dev/stderr
+		if [ ! -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    echo "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"  > /dev/stderr
+		fi
+
+	    else
+		# The log file has been specified, so we log onto it
+		if [ -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    logMulti "Error - The ${myEnvVarValue} directory should exist and be accessible, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"
+		else
+		    logMulti "Error - The ${myEnvVarValue} file should exist and be accessible, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"  \
+		      "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"
+		fi
+	    fi
+
+	    # Return the position of the first environment variable not
+	    # specified
+	    return $(( $idx + 1 ))
+	fi
+    done  
+}
+
+# Check that a list of files (whatever the type, could be directories) exist
+# and are accessible
+assertFileWriteable() {
+    declare -a envVarNameList=($@)
+    for idx in "${!envVarNameList[@]}"
+    do
+	local myEnvVarName="${envVarNameList[$idx]}"
+	local myEnvVarValue="${!myEnvVarName}"
+	if [ ! -w "${myEnvVarValue}" ]
+	then
+	    if [ -z "${KJW_LOG_FILE}" -o ! -w "${KJW_LOG_FILE}" ]
+	    then
+		# The log file has not been specified yet, so we log onto
+		# the standard error stream
+		echo "Error - The ${myEnvVarValue} file/directory should exist and be writeable, but does not."  > /dev/stderr
+		echo "        Current script: ${KJW_SCRIPT_URL}"  > /dev/stderr
+		if [ ! -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    echo "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"  > /dev/stderr
+		fi
+
+	    else
+		# The log file has been specified, so we log onto it
+		if [ -z "${KJW_K8S_DEPL_FILE}" ]
+		then
+		    logMulti "Error - The ${myEnvVarValue} directory should exist and be writeable, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"
+		else
+		    logMulti "Error - The ${myEnvVarValue} file should exist and be writeable, but does not." \
+		      "        Current script: ${KJW_SCRIPT_URL}"  \
+		      "        That script is usually launched by a Kubernetes deployment (${KJW_K8S_DEPL_FILE})"
+		fi
+	    fi
+
+	    # Return the position of the first environment variable not
+	    # specified
+	    return $(( $idx + 1 ))
+	fi
+    done  
+}
+
