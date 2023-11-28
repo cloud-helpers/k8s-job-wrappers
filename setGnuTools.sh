@@ -17,18 +17,20 @@ export HEAD_TOOL="head"
 export SED_TOOL="sed"
 export AWK_TOOL="awk"
 export PSP_TOOL="ps -q"
+export BASE64_TOOL="base64"
 if [ -f /usr/bin/sw_vers ]
 then
     DATE_TOOL="gdate"
     WC_TOOL="gwc"
     HEAD_TOOL="ghead"
     SED_TOOL="gsed"
-	AWK_TOOL="gawk"
+    AWK_TOOL="gawk"
     PSP_TOOL="ps -p"
+    BASE64_TOOL="gbase64"
     if [ ! $(command -v ${DATE_TOOL}) ]
     then
 		echo "Error - Cannot find GNU coreutils tools (e.g., ${DATE_TOOL}, " \
-			 "${WC_TOOL}, ${HEAD_TOOL}, ${PSP_TOOL}."
+			 "${WC_TOOL}, ${HEAD_TOOL}, ${PSP_TOOL}, ${BASE64_TOOL}."
 		echo "        Install those with \`brew install coreutils\`"
 		return 1
     fi
