@@ -21,7 +21,7 @@ curl -L -s \
   -o k8s-job-wrappers.tar.gz && \
 tar zxf k8s-job-wrappers.tar.gz && rm -f k8s-job-wrappers.tar.gz && \
 sudo mv -f k8s-job-wrappers-$LOGSUP_VERSION /usr/local/ && \
-sudo unlink /usr/local/k8s-job-wrappers && \
+sudo rm -f /usr/local/k8s-job-wrappers && \
 sudo ln -s /usr/local/k8s-job-wrappers-$LOGSUP_VERSION /usr/local/k8s-job-wrappers
 ```
 
