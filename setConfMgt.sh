@@ -63,7 +63,7 @@ fi
 # $3 - base name of the configuration files, e.g., params (the configuration file would then be params.yml)
 setEnvVarsFromConfFiles() {
 	local FUNC_CUR="${KJW_FUNC}"
-	KJW_FUNC="setTSVar"
+	KJW_FUNC="setEnvVarsFromConfFiles"
 	log "Beginning of function"
 
 	# Parse parameters
@@ -79,6 +79,21 @@ setEnvVarsFromConfFiles() {
 				 "=> Configuration files to be sourced: ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml"
 	fi
 
+	# If the confs_dir is on S3, it must first be synchronized locally in the
+	# local confs/ directory
+	if [[ "${CONFS_DIR}" == "s3://"* ]]; then
+		local local_confs_dir="confs"
+		log "The configuration directory is on AWS S3 (${CONFS_DIR}). It will be downloaded into the local ${local_confs_dir}/ directory first"
+		aws s3 sync ${CONFS_DIR} ${local_confs_dir}
+		retval=$?
+		if [ "${retval}" != 0 ]; then
+			log "Error - There is an issue when downloading from AWS S3 (${CONFS_DIR}) to local ${local_confs_dir}/ directory"
+			log "End of function"; KJW_FUNC="${FUNC_CUR}"
+			return 1
+		fi
+		CONFS_DIR="${local_confs_dir}"
+	fi
+	
 	# Sanity checks
 	if [ ! -d "${CONFS_DIR}" ]; then
 		log "Error - The ${CONFS_DIR}/ base directory does not seem to exist"
@@ -100,7 +115,7 @@ setEnvVarsFromConfFiles() {
 		log "Error - No ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml file seems to exist"
 		log "End of function"; KJW_FUNC="${FUNC_CUR}"; return 1
 	fi	
-	
+
 	#
 	TMP_YQ_RST_FP="yq-results.txt"
 	TMP_CFG_FP="yq-results.cfg"
