@@ -72,10 +72,12 @@ setEnvVarsFromConfFiles() {
 	CFG_BASE_NAME=${3:-"params"}
 
 	# Reporting
-	logMulti "ENV=${ENV} (derived from first parameter or default)" \
-			 "CONFS_DIR=${CONFS_DIR} (derived from second parameter or default)" \
-			 "CFG_BASE_NAME=${CFG_BASE_NAME} (derived from third parameter or default)" \
-			 "=> Configuration files to be sourced: ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml"
+	if [ -n "${KJW_VERBOSE}" ]; then
+		logMulti "ENV=${ENV} (derived from first parameter or default)" \
+				 "CONFS_DIR=${CONFS_DIR} (derived from second parameter or default)" \
+				 "CFG_BASE_NAME=${CFG_BASE_NAME} (derived from third parameter or default)" \
+				 "=> Configuration files to be sourced: ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml"
+	fi
 
 	# Sanity checks
 	if [ ! -d "${CONFS_DIR}" ]; then
@@ -102,8 +104,15 @@ setEnvVarsFromConfFiles() {
 	#
 	TMP_YQ_RST_FP="yq-results.txt"
 	TMP_CFG_FP="yq-results.cfg"
-	log "Setting up environment variables from ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml..."
-	yq ea '. as $item ireduce ({}; . * $item )' ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml > ${TMP_YQ_RST_FP} 2>&1
+	if [ -n "${KJW_VERBOSE}" ]; then
+		log "Setting up environment variables from ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml..."
+	fi
+
+	# Merging YAML files together thanks to the eval-all (ea) command of yq:
+	# https://mikefarah.gitbook.io/yq/operators/reduce#merge-all-yaml-files-together
+	yq ea '. as $item ireduce ({}; . * $item )' \
+	   ${CONFS_DIR}/base/${CFG_BASE_NAME}.y*ml \
+	   ${CONFS_DIR}/${ENV}/${CFG_BASE_NAME}.y*ml > ${TMP_YQ_RST_FP} 2>&1
 	retval=$?
 	if [ "${retval}" != 0 ]
 	then
@@ -120,15 +129,16 @@ setEnvVarsFromConfFiles() {
 	# sourced directly by the Bash interpreter
 	grep -e "^[[:alnum:]]" ${TMP_YQ_RST_FP}| sed -e 's/: "/="/g' > ${TMP_CFG_FP}
 	#
-	logMulti "Merged environment variables to be setup:" \
-			 "$(cat ${TMP_CFG_FP})"
-
+	if [ -n "${KJW_VERBOSE}" ]; then
+		logMulti "Merged environment variables to be setup:" \
+				 "$(cat ${TMP_CFG_FP})"
+	fi
+	
 	#
 	source ${TMP_CFG_FP}
 
 	# Cleaning and reporting
 	rm -f ${TMP_YQ_RST_FP} ${TMP_CFG_FP}
-	log "... done"
 
 	#
 	log "End of function"
