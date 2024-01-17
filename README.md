@@ -15,7 +15,7 @@ K8S Job Wrappers is abbreviated as KJB.
 * Download and extract the archive of Shell scripts (from a `Dockerfile`,
   just remove the `sudo` keyword):
 ```bash
-LOGSUP_VERSION="0.0.6"
+LOGSUP_VERSION="0.0.7"
 curl -L -s \
   https://github.com/cloud-helpers/k8s-job-wrappers/archive/refs/tags/v$LOGSUP_VERSION.tar.gz \
   -o k8s-job-wrappers.tar.gz && \
