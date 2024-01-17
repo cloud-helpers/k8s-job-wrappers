@@ -118,7 +118,7 @@ setEnvVarsFromConfFiles() {
 
 	# Transform the format from VAR: "value" to VAR="value", so that it may be
 	# sourced directly by the Bash interpreter
-	grep -e "^[[:alnum:]]" ${TMP_YQ_RST_FP} | tr : = | tr -d " " > ${TMP_CFG_FP}
+	grep -e "^[[:alnum:]]" ${TMP_YQ_RST_FP}| sed -e 's/: "/="/g' > ${TMP_CFG_FP}
 	#
 	logMulti "Merged environment variables to be setup:" \
 			 "$(cat ${TMP_CFG_FP})"
