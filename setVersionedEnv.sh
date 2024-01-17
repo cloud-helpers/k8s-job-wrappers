@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setVersionedEnv.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setVersionedEnv.sh
 #
 # Utility supporting executing tasks from within Kubernetes (k8s) pods
 #
@@ -10,14 +10,14 @@
 # the full reproducibility/observability of data transformation processes
 #
 # Dependencies:
-# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setDistAndArch.sh)
-# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setGnuTools.sh)
-# * setLogFunc.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setLogFunc.sh)
-# * setCloudStorage.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setCloudStorage.sh)
+# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setDistAndArch.sh)
+# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setGnuTools.sh)
+# * setLogFunc.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setLogFunc.sh)
+# * setCloudStorage.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setCloudStorage.sh)
 #
 
 #
-THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/shlib/setVersionedEnv.sh"
+THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setVersionedEnv.sh"
 KJW_FUNC="default"
 
 # Derive where KJW has been installed

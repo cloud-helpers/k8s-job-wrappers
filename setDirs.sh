@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setDirs.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setDirs.sh
 #
 # Utility supporting executing tasks from within Kubernetes (k8s) pods
 #

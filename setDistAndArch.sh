@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setDistAndArch.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setDistAndArch.sh
 #
 # Utility supporting executing tasks from within Kubernetes (k8s) pods
 #

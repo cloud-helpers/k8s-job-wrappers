@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setChecker.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setChecker.sh
 #
 # Utility supporting executing tasks from within Kubernetes (k8s) pods
 #
@@ -8,13 +8,13 @@
 # been set, or that a specific file exists and is accessible
 #
 # Dependencies:
-# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setDistAndArch.sh)
-# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setGnuTools.sh)
-# * setLogFunc.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setLogFunc.sh)
+# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setDistAndArch.sh)
+# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setGnuTools.sh)
+# * setLogFunc.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setLogFunc.sh)
 #
 
 #
-THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/shlib/setCheckers.sh"
+THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setCheckers.sh"
 KJW_FUNC="default"
 
 # Derive where KJW has been installed

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setLogFunc.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setLogFunc.sh
 #
 # Utility supporting generating log files for off-line/batched jobs,
 # for instance when executed from within Kubernetes (k8s) pods
@@ -12,12 +12,12 @@
 #                   information, very useful when referenced from the logs
 #
 # Dependencies:
-# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setDistAndArch.sh)
-# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setGnuTools.sh)
+# * setDistAndArch.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setDistAndArch.sh)
+# * setGnuTools.sh (https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setGnuTools.sh)
 #
 
 #
-THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/shlib/setLogFunc.sh"
+THIS_KJW_SCRIPT_URL="https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setLogFunc.sh"
 KJW_FUNC="default"
 
 # Derive where KJW has been installed
@@ -109,7 +109,7 @@ logMulti() {
 		echo "${myline}" | tee -a ${KJW_LOG_FILE}
     done
 
-    echo "############### [${logTime} (UTC)][${KJW_UNAME}@${KJW_HNAME}][${KJW_FUNC}] - end ######################" | tee -a ${KJW_LOG_FILE}
+    echo "############### [${logTime} (UTC)][${KJW_UNAME}@${KJW_HNAME}][${KJW_PLTF}-${KJW_ARCH}][${caller_script}][${KJW_FUNC}] - end ######################" | tee -a ${KJW_LOG_FILE}
 }
 
 logStart() {

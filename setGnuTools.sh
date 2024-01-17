@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/master/setGnuTools.sh
+# File: https://github.com/cloud-helpers/k8s-job-wrappers/tree/main/setGnuTools.sh
 #
 # Utility supporting executing tasks from within Kubernetes (k8s) pods
 #
