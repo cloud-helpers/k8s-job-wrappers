@@ -15,6 +15,7 @@ export DATE_TOOL="date"
 export WC_TOOL="wc"
 export HEAD_TOOL="head"
 export TAIL_TOOL="tail"
+export DF_TOOL="df"
 export SED_TOOL="sed"
 export AWK_TOOL="awk"
 export PSP_TOOL="ps -q"
@@ -25,6 +26,7 @@ then
 		WC_TOOL="gwc"
         HEAD_TOOL="ghead"
         TAIL_TOOL="gtail"
+		DF_TOOL="gdf"
         SED_TOOL="gsed"
         AWK_TOOL="gawk"
         PSP_TOOL="ps -p"
@@ -33,7 +35,7 @@ then
         then
             echo "Error - Cannot find GNU coreutils tools (e.g.," \
                  "${DATE_TOOL}, ${WC_TOOL}, ${HEAD_TOOL}, ${TAIL_TOOL}," \
-				 "${PSP_TOOL}, ${BASE64_TOOL})."
+				 "${DF_TOOL}, ${PSP_TOOL}, ${BASE64_TOOL})."
             echo "        Install those with \`brew install coreutils\`"
             return 1
         fi
